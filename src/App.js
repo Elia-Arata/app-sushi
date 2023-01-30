@@ -11,7 +11,7 @@ import shrimp from "./images/shrimp.png";
 class App extends Component {
   state = {
     cards: [
-      { id: 0, nome: "California", prezzo: 1.99, immagine: california },
+      { id: 0, nome: "California", prezzo: 1.99, immagine: california, quantità: 0 },
       { id: 1, nome: "dragon", prezzo: 3.49, immagine: dragon, quantità: 0 },
       { id: 2,nome: "dynamite", prezzo: 2.49, immagine: dynamite, quantità: 0,},
       { id: 3,nome: "philadelphia",prezzo: 0.99,immagine: philadelphia,quantità: 0, },
@@ -22,6 +22,13 @@ class App extends Component {
 
 handleDelete = cardId => {
   const cards = this.state.cards.filter(card => card.id !== cardId);
+  this.setState({ cards });
+}
+handleIncrement = card=> {
+  const cards = [...this.state.cards];
+  const id = cards.indexOf(card);
+  cards[id] = {...card };
+  cards[id].quantità++;
   this.setState({ cards });
 }
 
@@ -39,7 +46,8 @@ handleDelete = cardId => {
               <Card
                 key={card.id}
                 onDelete={this.handleDelete}
-              card={card} />
+                onIncrement={this.handleIncrement}
+                card={card} />
              
             ))}
           </div>
